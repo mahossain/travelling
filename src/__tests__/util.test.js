@@ -5,4 +5,7 @@ describe('util tests', () => {
   test('adding 5 * 5 = 25', async () => {
     expect(5 * 5).toEqual(25);
   });
+  test('minus 20 - 5 = 15', async () => {
+    expect(20 - 5).toEqual(15);
+  });
 });
