@@ -25,6 +25,25 @@
     "cors": "^2.8.5",
     "express": "^4.17.1"
   },
+  "jest": {
+    "testRegex": "./src/__tests__/.*\\.(test|spec)\\.js$",
+    "testEnvironment": "node",
+    "setupFiles": [
+      "./src/test-setup/index.js"
+    ],
+    "testPathIgnorePatterns": [
+      "./src/__tests__/_test_setup"
+    ],
+    "setupTestFrameworkScriptFile": "./src/test-setup/pre-test.js",
+    "globals": {
+      "request": {}
+    },
+    "verbose": true,
+    "moduleDirectories": [
+      "node_modules",
+      "lib"
+    ]
+  },
   "bugs": {
     "url": "https://github.com/mahossain/travelling/issues"
   },
