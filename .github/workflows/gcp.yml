@@ -30,6 +30,7 @@ jobs:
       - name: Configure Docker Client
         run: |-
           gcloud auth configure-docker --quiet
+          gcloud auth configure-docker australia-southeast1-docker.pkg.dev --quiet
       - name: Push Docker Image to Container Registry ( GCR )
         env:
           GIT_TAG: v0.1.0
@@ -39,6 +40,11 @@ jobs:
           docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
           docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
 
-
-
-
+      - name: Push Docker Image to Artifact Registry
+        env:
+          GIT_TAG: v0.1.0
+        run: |-
+          docker tag $IMAGE_NAME:latest australia-southeast1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME:latest
+          docker tag $IMAGE_NAME:latest australia-southeast1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
+          docker push australia-southeast1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME:latest
+          docker push australia-southeast1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
