@@ -40,11 +40,11 @@ jobs:
           docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
           docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
 
-      - name: Push Docker Image to Artifact Registry
-        env:
-          GIT_TAG: v0.1.0
-        run: |-
-          docker tag $IMAGE_NAME:latest australia-southeast1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME:latest
-          docker tag $IMAGE_NAME:latest australia-southeast1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
-          docker push australia-southeast1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME:latest
-          docker push australia-southeast1-docker.pkg.dev/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
+      - name: Deploy
+        run: |
+          gcloud run deploy $IMAGE_NAME:latest \
+          --region australia-southeast1 \
+          --image gcr.io/$PROJECT_ID/$IMAGE_NAME:latest \
+          --platform managed \
+          --allow-unauthenticated \
+          --project $PROJECT_ID
