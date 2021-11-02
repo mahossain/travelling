@@ -22,6 +22,7 @@ jobs:
 
       - uses: google-github-actions/setup-gcloud@master
         with:
+          version: 'latest'
           service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
           project_id: ${{ env.PROJECT_ID }}
           export_Default_credentials: true
@@ -35,16 +36,13 @@ jobs:
         env:
           GIT_TAG: v0.1.0
         run: |-
-          docker tag $IMAGE_NAME:latest gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
-          docker tag $IMAGE_NAME:latest gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
           docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
-          docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
 
       - name: Deploy
         run: |
-          gcloud run deploy travel-app \
+          gcloud run deploy $IMAGE_NAME \
           --region australia-southeast1 \
-          --image gcr.io/$PROJECT_ID/travel-app \
+          --image gcr.io/$PROJECT_ID/$IMAGE_NAME \
           --platform managed \
           --allow-unauthenticated \
           --project $PROJECT_ID
