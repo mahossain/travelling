@@ -15,7 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: travel-app
-      PROJECT_ID: gcp-wow-food-wlx-mpp-psh-test
+      PROJECT_ID: gcp-wow-food-wlx-mpp-psh-dev
+      SERVICE_NAME: travel-app
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -27,7 +28,7 @@ jobs:
           project_id: ${{ env.PROJECT_ID }}
           export_Default_credentials: true
       - name: Build Docker Image
-        run: docker build -t gcr.io/$PROJECT_ID/$IMAGE_NAME:latest .
+        run: docker build -t gcr.io/${{ env.PROJECT_ID }}/$IMAGE_NAME:latest .
       - name: Configure Docker Client
         run: |-
           gcloud auth configure-docker --quiet
@@ -40,7 +41,7 @@ jobs:
         run: |
           gcloud run deploy $IMAGE_NAME \
           --region australia-southeast1 \
-          --image gcr.io/$PROJECT_ID/$IMAGE_NAME \
+          --image gcr.io/$PROJECT_ID/$SERVICE_NAME/$IMAGE_NAME \
           --platform managed \
           --allow-unauthenticated \
           --project $PROJECT_ID
