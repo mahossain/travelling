@@ -32,6 +32,11 @@ app.get('/wx/travel/locations', (req, res, next) => {
   return res.status(200).send(payload);
 });
 
+app.get('/wx/system/env', (req, res) => {
+  const env = process.env.SECRET_NAME || 'not found';
+  return res.status(200).send({env: env});
+});
+
 app.listen(port, () =>{
   console.log(`listening to requests on http://localhost:${port}`);
 });
