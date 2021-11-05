@@ -32,8 +32,10 @@ jobs:
         with:
           secrets: |-
             secret_name:projects/527559480534/secrets/secret-name
+        env:
+          SECRET_NAME: ${{ steps.secrets.outputs.secret_name }}
       - name: Build Docker Image
-        run: docker build --build-arg name=$steps.secrets.outputs.secret_name -t gcr.io/${{ env.PROJECT_ID }}/$IMAGE_NAME:latest .
+        run: docker build --build-arg name=$SECRET_NAME -t gcr.io/${{ env.PROJECT_ID }}/$IMAGE_NAME:latest .
       - name: Configure Docker Client
         run: |-
           gcloud auth configure-docker --quiet
