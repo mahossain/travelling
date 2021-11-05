@@ -35,7 +35,7 @@ jobs:
       - name: Build Docker Image
         env:
           TOKEN: ${{ steps.secrets.outputs.token }}
-        run: docker build --build-arg name=${{TOKEN}} -t gcr.io/${{ env.PROJECT_ID }}/$IMAGE_NAME:latest .
+        run: docker build --build-arg name=TOKEN -t gcr.io/${{ env.PROJECT_ID }}/$IMAGE_NAME:latest .
       - name: Configure Docker Client
         run: |-
           gcloud auth configure-docker --quiet
