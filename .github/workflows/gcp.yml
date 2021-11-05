@@ -31,11 +31,12 @@ jobs:
         uses: google-github-actions/get-secretmanager-secrets@main
         with:
           secrets: |-
-            secret_name:projects/527559480534/secrets/secret-name
+            token:projects/527559480534/secrets/secret-name/versions/1
+      - id: publish
         env:
-          SECRET_NAME: ${{ steps.secrets.outputs.secret_name }}
+          TOKEN: ${{ steps.secrets.outputs.secret_name }}
       - name: Build Docker Image
-        run: docker build --build-arg name=$SECRET_NAME -t gcr.io/${{ env.PROJECT_ID }}/$IMAGE_NAME:latest .
+        run: docker build --build-arg name=$TOKEN -t gcr.io/${{ env.PROJECT_ID }}/$IMAGE_NAME:latest .
       - name: Configure Docker Client
         run: |-
           gcloud auth configure-docker --quiet
