@@ -3,7 +3,8 @@
 #RUN apt-get -y install nginx
 
 FROM node:16
-ENV SECRET_NAME ${SECRET_NAME}
+ARG name
+ENV SECRET_NAME $name
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
