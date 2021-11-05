@@ -32,9 +32,11 @@ jobs:
         with:
           secrets: |-
             token:projects/527559480534/secrets/secret-name/versions/1
-      - name: Build Docker Image
+      - id: publish
+        uses: foo/bar@master
         env:
           TOKEN: ${{ steps.secrets.outputs.secret_name }}
+      - name: Build Docker Image
         run: docker build --build-arg name=$TOKEN -t gcr.io/${{ env.PROJECT_ID }}/$IMAGE_NAME:latest .
       - name: Configure Docker Client
         run: |-
