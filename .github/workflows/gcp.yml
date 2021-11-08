@@ -55,5 +55,3 @@ jobs:
             --set-env-vars=\
           STATE=${state},\
           SECRET_NAME=${secret-name}
-
-
