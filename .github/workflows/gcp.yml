@@ -53,6 +53,7 @@ jobs:
             --allow-unauthenticated \
             --project $PROJECT_ID \
             --set-env-vars=\
-          SECRET_NAME=${secret-name},\
-          STATE=${state}
+          STATE=${state},\
+          SECRET_NAME=${secret-name}
+
 
