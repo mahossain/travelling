@@ -52,5 +52,4 @@ jobs:
           --platform managed \
           --allow-unauthenticated \
           --project $PROJECT_ID \
-          --set-secrets=\
-          SECRET_NAME=secret-name:latest
+          --set-env-vars=SECRET_NAME=$TOKEN
