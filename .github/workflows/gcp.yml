@@ -33,7 +33,9 @@ jobs:
           secrets: |-
             token:projects/527559480534/secrets/secret-name/versions/1
       - name: Build Docker Image
-        run: docker build --build-arg name=${{ steps.secrets.outputs.token }} -t gcr.io/${{ env.PROJECT_ID }}/$IMAGE_NAME:latest .
+        env:
+          TOKEN: ${{ steps.secrets.outputs.token }}
+        run: docker build --build-arg name=production -t gcr.io/${{ env.PROJECT_ID }}/$IMAGE_NAME:latest .
       - name: Configure Docker Client
         run: |-
           gcloud auth configure-docker --quiet
